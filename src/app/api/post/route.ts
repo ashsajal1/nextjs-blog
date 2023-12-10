@@ -3,10 +3,8 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 
 const postSchema = z.object({
-  title: z.string().min(2).max(10),
-  content: z.string().min(12).max(100),
-  author: z.string(),
-  authorId: z.number(),
+  title: z.string().min(2).max(100),
+  content: z.string().min(12).max(1000),
 });
 
 export async function POST(req: NextRequest) {
@@ -16,14 +14,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(validation.error.errors, { status: 400 });
   }
 
-  const { title, content, author, authorId } = body;
+  const { title, content } = body;
 
   const newPost = await prisma.post.create({
     data: {
       title: title,
       content: content,
-      author: author,
-      authorId: authorId,
     },
   });
 

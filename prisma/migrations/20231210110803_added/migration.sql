@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Post" ALTER COLUMN "author" SET DEFAULT 'Admin',
+ALTER COLUMN "authorId" SET DEFAULT 1;

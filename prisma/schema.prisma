@@ -17,6 +17,6 @@ model Post {
   title     String   @db.VarChar(255)
   content   String?
   published Boolean  @default(false)
-  author    String
-  authorId  Int
+  author    String   @default("Admin")
+  authorId  Int      @default(1)
 }
