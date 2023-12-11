@@ -7,7 +7,7 @@ import React from 'react'
 export default async function PostPage() {
 
   const post = await prisma.post.findMany()
-  console.log(post)
+  // console.log(post)
 
   return (
     <div>

@@ -14,16 +14,20 @@ import { Share1Icon } from '@radix-ui/react-icons'
 interface PostParams {title:string, author:string, publishedDate:Date, content:string | null}
 
 export default function Post({title, author, publishedDate, content}:PostParams) {
+
+    
     return (
-        <div className='border rounded shadow'>
+        <div className='border rounded shadow mt-2'>
             <div>
                 {/* <img className='rounded' src="https://picsum.photos/600/200" alt="" /> */}
                 <div className='p-2'>
-                    <h2>{title}</h2>
+                    <h2 className='font-bold text-2xl'>{title}</h2>
                     <div className='flex items-center gap-2 text-xs'>
                         <p>{author}</p>
                         <p>{publishedDate.toDateString()}</p>
+                        
                     </div>
+                    <p className='text-sm'>{content?.slice(0, 50)}...</p>
                     <div className='mt-2 flex items-center gap-2'>
                         <Button>Read more</Button>
 
