@@ -25,3 +25,7 @@ export async function POST(req: NextRequest) {
     { status: 201 }
   );
 }
+
+export async function GET(_, res:NextResponse) {
+  
+}
