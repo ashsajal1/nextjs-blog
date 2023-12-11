@@ -32,6 +32,19 @@ export default function NewPostPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     // console.log(register('title'))
 
+    const onSubmit = handleSubmit(async (data) => {
+        // console.log(data)
+        
+        try {
+            setIsSubmitting(true)
+            await axios.post('/api/post', data);
+            router.push('/post')
+        } catch (error) {
+            setIsSubmitting(false)
+            setError("An unexpected error occurred!")
+        }
+    })
+
     return (
         <div className="max-w-xl">
             {error && <Alert variant="destructive" className="mb-5">
@@ -43,18 +56,7 @@ export default function NewPostPage() {
             </Alert>}
             <form
                 className="space-y-3"
-                onSubmit={handleSubmit(async (data) => {
-                    // console.log(data)
-                    
-                    try {
-                        setIsSubmitting(true)
-                        await axios.post('/api/post', data);
-                        router.push('/post')
-                    } catch (error) {
-                        setIsSubmitting(false)
-                        setError("An unexpected error occurred!")
-                    }
-                })}>
+                onSubmit={onSubmit}>
                 <Input placeholder="Enter the title" {...register('title')} />
                 <ErrorMessage>{errors.title?.message}</ErrorMessage>
                 <Controller name="content" control={control} render={({ field }) => <SimpleMDE placeholder="Enter the blog" {...field} />} />
