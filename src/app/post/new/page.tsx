@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/alert"
 import { useState } from "react";
 import { postSchema } from "@/app/validationSchema";
-import {z } from 'zod'
+import { z } from 'zod'
 import ErrorMessage from "@/components/ErrorMessage";
 import Spinner from "@/components/Spinner";
 
@@ -34,7 +34,7 @@ export default function NewPostPage() {
 
     const onSubmit = handleSubmit(async (data) => {
         // console.log(data)
-        
+
         try {
             setIsSubmitting(true)
             await axios.post('/api/post', data);
