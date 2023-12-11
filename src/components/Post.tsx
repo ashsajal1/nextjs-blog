@@ -11,17 +11,18 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from './ui/button'
 import { Share1Icon } from '@radix-ui/react-icons'
+interface PostParams {title:string, author:string, publishedDate:Date, content:string | null}
 
-export default function Post() {
+export default function Post({title, author, publishedDate, content}:PostParams) {
     return (
         <div className='border rounded shadow'>
             <div>
                 {/* <img className='rounded' src="https://picsum.photos/600/200" alt="" /> */}
                 <div className='p-2'>
-                    <h2>This is title!</h2>
+                    <h2>{title}</h2>
                     <div className='flex items-center gap-2 text-xs'>
-                        <p>Author</p>
-                        <p>12 Jan, 2023</p>
+                        <p>{author}</p>
+                        <p>{publishedDate.toDateString()}</p>
                     </div>
                     <div className='mt-2 flex items-center gap-2'>
                         <Button>Read more</Button>

@@ -26,6 +26,11 @@ export async function POST(req: NextRequest) {
   );
 }
 
-export async function GET(_, res:NextResponse) {
-  
+export async function GET() {
+  const posts = await prisma.post.findMany();
+  return NextResponse.json({
+    posts:posts
+  } ,{
+    status: 200
+  })
 }
