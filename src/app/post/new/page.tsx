@@ -17,6 +17,7 @@ import {
 import { useState } from "react";
 import { postSchema } from "@/app/validationSchema";
 import {z } from 'zod'
+import ErrorMessage from "@/components/ErrorMessage";
 
 type PostForm = z.infer<typeof postSchema>;
 
@@ -51,9 +52,9 @@ export default function NewPostPage() {
                     }
                 })}>
                 <Input placeholder="Enter the title" {...register('title')} />
-                {errors.title && <p className="text-red-600">{errors.title.message}</p>}
+                <ErrorMessage>{errors.title?.message}</ErrorMessage>
                 <Controller name="content" control={control} render={({ field }) => <SimpleMDE placeholder="Enter the blog" {...field} />} />
-                {errors.content && <p className="text-red-600">{errors.content.message}</p> }
+                <ErrorMessage>{errors.content?.message}</ErrorMessage>
                 <Button>Submit</Button>
             </form>
         </div>
