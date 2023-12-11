@@ -18,6 +18,7 @@ import { useState } from "react";
 import { postSchema } from "@/app/validationSchema";
 import {z } from 'zod'
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/Spinner";
 
 type PostForm = z.infer<typeof postSchema>;
 
@@ -28,6 +29,7 @@ export default function NewPostPage() {
     });
 
     const [error, setError] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
     // console.log(register('title'))
 
     return (
@@ -43,19 +45,21 @@ export default function NewPostPage() {
                 className="space-y-3"
                 onSubmit={handleSubmit(async (data) => {
                     // console.log(data)
-                    setError("An error occurred!")
+                    
                     try {
+                        setIsSubmitting(true)
                         await axios.post('/api/post', data);
                         router.push('/post')
                     } catch (error) {
-                        console.log(error)
+                        setIsSubmitting(false)
+                        setError("An unexpected error occurred!")
                     }
                 })}>
                 <Input placeholder="Enter the title" {...register('title')} />
                 <ErrorMessage>{errors.title?.message}</ErrorMessage>
                 <Controller name="content" control={control} render={({ field }) => <SimpleMDE placeholder="Enter the blog" {...field} />} />
                 <ErrorMessage>{errors.content?.message}</ErrorMessage>
-                <Button>Submit</Button>
+                <Button disabled={isSubmitting}>Submit {isSubmitting && <Spinner />}</Button>
             </form>
         </div>
 
