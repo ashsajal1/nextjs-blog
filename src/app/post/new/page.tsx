@@ -6,7 +6,7 @@ import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import { useRouter } from "next/navigation";
-
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 
 import {
@@ -15,16 +15,16 @@ import {
     AlertTitle,
 } from "@/components/ui/alert"
 import { useState } from "react";
+import { postSchema } from "@/app/validationSchema";
+import {z } from 'zod'
 
-
-interface PostForm {
-    title: string,
-    content: string,
-}
+type PostForm = z.infer<typeof postSchema>;
 
 export default function NewPostPage() {
     const router = useRouter()
-    const { register, control, handleSubmit } = useForm<PostForm>();
+    const { register, control, handleSubmit, formState: { errors } } = useForm<PostForm>({
+        resolver: zodResolver(postSchema)
+    });
 
     const [error, setError] = useState('')
     // console.log(register('title'))
@@ -51,8 +51,9 @@ export default function NewPostPage() {
                     }
                 })}>
                 <Input placeholder="Enter the title" {...register('title')} />
+                {errors.title && <p className="text-red-600">{errors.title.message}</p>}
                 <Controller name="content" control={control} render={({ field }) => <SimpleMDE placeholder="Enter the blog" {...field} />} />
-
+                {errors.content && <p className="text-red-600">{errors.content.message}</p> }
                 <Button>Submit</Button>
             </form>
         </div>
